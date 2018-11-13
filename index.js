@@ -21,4 +21,4 @@ app.post('/word', async(req, res) => {
 
 app.listen(PORT);
 
-console.log("Сервер запущен...");
+console.log(`Порт доступа: ${PORT} (127.0.0.1:${PORT})\nСервер запущен...`);
