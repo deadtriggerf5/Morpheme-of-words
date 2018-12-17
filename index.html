@@ -3,11 +3,18 @@
         <title>
             Морфемный анализ
         </title>
+        <style>
+            #sentence {
+                width: 100%;
+                min-height: 250px;
+                margin-bottom: 10px;
+            }
+        </style>
     </head>
     <body>
         <div>
             <form method="POST" action="/word">
-                <input name="sentence" placeholder="Введите предложение"/>
+                <textarea id="sentence" name="sentence" placeholder="Введите предложение"></textarea>
                 <br/>
                 <input type="submit"/>
             </form>
