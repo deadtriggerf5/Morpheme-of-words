@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const parser = require('body-parser');
-const showRes = require('./prefix');
+const prefixCheck = require('./prefix');
 
 const PORT = process.env.PORT || 3000;
 
@@ -15,8 +15,22 @@ app.get('/', async(req, res) => {
 });
 
 app.post('/word', async(req, res) => {
-    const result = showRes(req.body.word);
-    res.send(result);
+    const array = req.body.sentence.split(" ");
+    const results = [];
+    array.forEach(element => {
+        if(element.length > 2){
+            const word = element.replace(/[^а-яА-Я]/g, '');
+            results.push({
+                word,
+                prefix: prefixCheck(word)
+            })
+        }
+    });
+    let html = '';
+    results.forEach(el => {
+        html += `<div>Слово: ${el.word}<br/>Префикс: ${el.prefix.success ? el.prefix.name : 'отсутствует'}</div><br/>`
+    })
+    res.send(html);
 });
 
 app.listen(PORT);

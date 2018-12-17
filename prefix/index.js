@@ -1,6 +1,7 @@
 const data = require('./prefixes.json');
 
-const showRes = (word) => {
+const prefixCheck = (word) => {
+    word = word.toLowerCase();
     var checked = '';
     var prefixAvailable = {
         success: false,
@@ -18,4 +19,4 @@ const showRes = (word) => {
     return prefixAvailable;
 }
 
-module.exports = showRes;
+module.exports = prefixCheck;
