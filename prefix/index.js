@@ -1,4 +1,5 @@
 const data = require('./prefixes.json');
+const aZ = require('az');
 
 const prefixCheck = (word) => {
     word = word.toLowerCase();
@@ -19,4 +20,12 @@ const prefixCheck = (word) => {
     return prefixAvailable;
 }
 
-module.exports = prefixCheck;
+const azLib = (text) => {
+    console.log(aZ.Tokens(text));
+    return {};
+}
+
+module.exports = {
+    prefixCheck, 
+    azLib
+};

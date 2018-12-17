@@ -10,6 +10,7 @@
   "author": "Alexander Yakhatin",
   "license": "ISC",
   "dependencies": {
+    "az": "^0.2.3",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "node-static": "^0.7.11"

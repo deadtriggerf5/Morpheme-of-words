@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
 const parser = require('body-parser');
-const prefixCheck = require('./prefix');
+const {prefixCheck, azLib} = require('./prefix');
+const Az = require('az');
 
 const PORT = process.env.PORT || 3000;
 
@@ -14,23 +15,24 @@ app.get('/', async(req, res) => {
     res.sendFile(`${__dirname}/index.html`);
 });
 
-app.post('/word', async(req, res) => {
+app.post('/word', (req, res) => {
     const array = req.body.sentence.split(" ");
     const results = [];
-    array.forEach(element => {
-        if(element.length > 2){
+    Az.Morph.init('./node_modules/az/dicts', () => {
+        array.forEach(element => {
             const word = element.replace(/[^а-яА-Я]/g, '');
+            const morph = Az.Morph(word);
             results.push({
                 word,
-                prefix: prefixCheck(word)
+                morph
             })
-        }
+        });
+        let html = '';
+        results.forEach(el => {
+            html += `<div>Слово: ${el.word}<br/>Анализ слова: ${el.morph[0].tag.ext}</div><br/>`
+        })
+        res.send(html);
     });
-    let html = '';
-    results.forEach(el => {
-        html += `<div>Слово: ${el.word}<br/>Префикс: ${el.prefix.success ? el.prefix.name : 'отсутствует'}</div><br/>`
-    })
-    res.send(html);
 });
 
 app.listen(PORT);
